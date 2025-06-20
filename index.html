@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercadinho Digital</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Tela de Login -->
+        <div id="loginScreen" class="login-form">
+            <h2>🛒 Mercadinho Digital</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; color: #666;">
+                Use qualquer email e senha para demonstração
+            </p>
+        </div>
+
+        <!-- Tela Principal -->
+        <div id="mainScreen" class="hidden">
+            <div class="header">
+                <div class="logo">🛒 Mercadinho Digital</div>
+                <div class="user-info">
+                    <span id="userName">Bem-vindo!</span>
+                    <button id="cartBtn" class="cart-icon">
+                        🛒 Carrinho
+                        <span id="cartCount" class="cart-count">0</span>
+                    </button>
+                    <button id="logoutBtn" class="logout-btn">Sair</button>
+                </div>
+            </div>
+
+            <div id="loading" class="loading">
+                Carregando produtos...
+            </div>
+
+            <div id="productsContainer" class="products-grid hidden"></div>
+
+            <!-- Formulário de Checkout -->
+            <div id="checkoutForm" class="checkout-form">
+                <h2 style="color: #667eea; margin-bottom: 1.5rem;">Finalizar Compra</h2>
+                
+                <div class="checkout-section">
+                    <h3>Informações de Entrega</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Completo:</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone:</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço:</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cidade:</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CEP:</label>
+                            <input type="text" id="cep" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>Método de Pagamento</h3>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="payment" value="credit" checked>
+                            Cartão de Crédito
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="payment" value="debit">
+                            Cartão de Débito
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="payment" value="pix">
+                            PIX
+                        </label>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>Resumo do Pedido</h3>
+                    <div id="orderSummary"></div>
+                    <div class="cart-total">
+                        <div class="total-amount">Total: R$ <span id="finalTotal">0,00</span></div>
+                    </div>
+                </div>
+
+                <button id="confirmOrderBtn" class="btn-primary" onclick="confirmOrder()">Confirmar Pedido</button>
+                <button id="backToCartBtn" class="logout-btn" onclick="backToCart()" style="width: 100%; margin-top: 1rem;">Voltar ao Carrinho</button>
+            </div>
+        </div>
+
+        <!-- Modal do Carrinho -->
+        <div id="cartModal" class="cart-modal">
+            <div class="cart-content">
+                <div class="cart-header">
+                    <h2>Seu Carrinho</h2>
+                    <button id="closeCart" class="close-cart">×</button>
+                </div>
+                <div id="cartItems"></div>
+                <div class="cart-total">
+                    <div class="total-amount">Total: R$ <span id="cartTotal">0,00</span></div>
+                </div>
+                <button id="checkoutBtn" class="checkout-btn" onclick="openCheckout()">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
