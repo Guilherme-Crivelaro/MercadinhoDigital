@@ -1,10 +1,10 @@
-// Estado da aplicação
+
         let isLoggedIn = false;
         let products = [];
         let cart = [];
         let currentUser = null;
 
-        // Elementos DOM
+
         const loginScreen = document.getElementById('loginScreen');
         const mainScreen = document.getElementById('mainScreen');
         const loginForm = document.getElementById('loginForm');
@@ -21,14 +21,14 @@
         const logoutBtn = document.getElementById('logoutBtn');
         const userName = document.getElementById('userName');
 
-        // Inicialização
+       
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar se há carrinho salvo
+            
             const savedCart = JSON.parse(localStorage.getItem('mercadinho_cart') || '[]');
             cart = savedCart;
             updateCartCount();
             
-            // Verificar se há usuário logado
+            
             const savedUser = localStorage.getItem('mercadinho_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
@@ -36,19 +36,19 @@
             }
         });
 
-        // Event Listeners
+        
         loginForm.addEventListener('submit', handleLogin);
         cartBtn.addEventListener('click', openCart);
         closeCart.addEventListener('click', closeCartModal);
         logoutBtn.addEventListener('click', handleLogout);
         
-        // Event listeners para checkout usando delegação
+        
         document.addEventListener('click', function(e) {
-            console.log('Clique detectado em:', e.target.id); // Debug
+            console.log('Clique detectado em:', e.target.id); 
             
             if (e.target.id === 'checkoutBtn') {
                 e.preventDefault();
-                console.log('Abrindo checkout...'); // Debug
+                console.log('Abrindo checkout...'); 
                 openCheckout();
             }
             
@@ -63,7 +63,7 @@
             }
         });
 
-        // Função de login
+        
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -76,7 +76,7 @@
             }
         }
 
-        // Função de logout
+        
         function handleLogout() {
             isLoggedIn = false;
             currentUser = null;
@@ -90,7 +90,7 @@
             checkoutForm.classList.add('hidden');
         }
 
-        // Mostrar tela principal
+  
         function showMainScreen() {
             isLoggedIn = true;
             loginScreen.classList.add('hidden');
@@ -99,7 +99,7 @@
             loadProducts();
         }
 
-        // Carregar produtos da API
+      
         async function loadProducts() {
             try {
                 loading.classList.remove('hidden');
@@ -114,7 +114,7 @@
             }
         }
 
-        // Exibir produtos
+ 
         function displayProducts() {
             productsContainer.innerHTML = products.map(product => `
                 <div class="product-card">
@@ -131,7 +131,7 @@
             `).join('');
         }
 
-        // Adicionar ao carrinho
+      
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
@@ -145,7 +145,6 @@
             updateCartCount();
             saveCart();
             
-            // Feedback visual
             const btn = event.target;
             const originalText = btn.textContent;
             btn.textContent = 'Adicionado!';
@@ -156,30 +155,29 @@
             }, 1000);
         }
 
-        // Atualizar contador do carrinho
+    
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
             cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
         }
 
-        // Salvar carrinho
+     
         function saveCart() {
             localStorage.setItem('mercadinho_cart', JSON.stringify(cart));
         }
 
-        // Abrir carrinho
+      
         function openCart() {
             displayCartItems();
             cartModal.style.display = 'block';
         }
 
-        // Fechar carrinho
+  
         function closeCartModal() {
             cartModal.style.display = 'none';
         }
 
-        // Exibir itens do carrinho
         function displayCartItems() {
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p style="text-align: center; color: #666;">Seu carrinho está vazio</p>';
@@ -209,7 +207,7 @@
             updateCartTotal();
         }
 
-        // Alterar quantidade
+
         function changeQuantity(productId, change) {
             const item = cart.find(item => item.id === productId);
             if (item) {
@@ -224,7 +222,7 @@
             }
         }
 
-        // Remover do carrinho
+
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCartCount();
@@ -232,13 +230,13 @@
             displayCartItems();
         }
 
-        // Atualizar total do carrinho
+       
         function updateCartTotal() {
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             cartTotal.textContent = total.toFixed(2).replace('.', ',');
         }
 
-        // Abrir checkout
+      
         function openCheckout() {
             console.log('openCheckout chamado, carrinho:', cart); // Debug
             
@@ -247,33 +245,33 @@
                 return;
             }
             
-            // Fechar modal do carrinho
+
             cartModal.style.display = 'none';
             
-            // Mostrar formulário de checkout
+    
             checkoutForm.style.display = 'block';
             checkoutForm.classList.remove('hidden');
             
-            // Exibir resumo do pedido
+   
             displayOrderSummary();
             
-            // Scroll para o checkout
+ 
             setTimeout(() => {
                 checkoutForm.scrollIntoView({ behavior: 'smooth' });
             }, 100);
             
-            console.log('Checkout aberto!'); // Debug
+            console.log('Checkout aberto!'); 
         }
 
-        // Voltar ao carrinho
+
         function backToCart() {
-            console.log('Voltando ao carrinho...'); // Debug
+            console.log('Voltando ao carrinho...'); 
             checkoutForm.style.display = 'none';
             checkoutForm.classList.add('hidden');
             openCart();
         }
 
-        // Exibir resumo do pedido
+
         function displayOrderSummary() {
             const orderSummary = document.getElementById('orderSummary');
             const finalTotal = document.getElementById('finalTotal');
@@ -289,7 +287,7 @@
             finalTotal.textContent = total.toFixed(2).replace('.', ',');
         }
 
-        // Confirmar pedido
+
         function confirmOrder() {
             const fullName = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
@@ -303,21 +301,21 @@
                 return;
             }
             
-            // Simular processamento do pedido
+            
             const orderNumber = Math.floor(Math.random() * 1000000);
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
             alert(`Pedido confirmado com sucesso!\n\nNúmero do pedido: #${orderNumber}\nTotal: R$ ${total.toFixed(2).replace('.', ',')}\n\nObrigado por comprar conosco!`);
             
-            // Limpar carrinho
+ 
             cart = [];
             localStorage.removeItem('mercadinho_cart');
             updateCartCount();
             
-            // Voltar para a tela principal
+            
             checkoutForm.classList.add('hidden');
             
-            // Limpar formulário
+         
             document.getElementById('fullName').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('address').value = '';
@@ -325,7 +323,7 @@
             document.getElementById('cep').value = '';
         }
 
-        // Fechar modal ao clicar fora
+       
         cartModal.addEventListener('click', function(e) {
             if (e.target === cartModal) {
                 closeCartModal();
